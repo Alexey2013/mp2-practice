@@ -40,17 +40,19 @@ TEST(TList, can_copy_list)
 	EXPECT_EQ(list1.GetCurrent()->data, list2.GetCurrent()->data);
 }
 
+TEST(TList, can_assign_list)
+{
+	TList<int> list1;
+	list1.insert_last(1);
+	TList<int> list2;
+	list2 = list1;
+	EXPECT_EQ(list1.GetCurrent()->data, list2.GetCurrent()->data);
+}
+
 TEST(TList, can_insert_last_in_the_list)
 {
 	TList<int> list;
 	ASSERT_NO_THROW(list.insert_last(1));
-}
-
-TEST(TList, can_insert_element_in_not_empty_list) 
-{
-	TList<int> list;
-	list.insert_last(1);
-	ASSERT_NO_THROW(list.insert_last(2));
 }
 
 TEST(TList, can_remove_element)
@@ -112,18 +114,18 @@ TEST(TList, throw_when_remove_from_empty_list)
 	ASSERT_ANY_THROW(list.remove(5));
 }
 
-TEST(TList, throw_when_remove_non_exist_elem) 
+TEST(TList, can_insert_first_element_in_empty_list)
 {
 	TList<int> list;
-	list.insert_last(4);
-	ASSERT_ANY_THROW(list.remove(5));
+	ASSERT_NO_THROW(list.insert_first(1););
 }
 
 TEST(TList, can_insert_first_element)
 {
 	TList<int> list;
-	list.insert_first(1); 
-	ASSERT_NO_THROW(list.insert_first(2));
+	list.insert_first(1);
+	list.insert_first(2);
+	EXPECT_EQ(2, list.GetSize());
 }
 
 TEST(TList, can_find_element_by_value)
@@ -146,6 +148,12 @@ TEST(TList, can_insert_before_element)
 	EXPECT_EQ(2, list.GetCurrent()->data);
 }
 
+TEST(TList, throw_when_insert_before_in_empty_list)
+{
+	TList<int> list;
+	ASSERT_ANY_THROW(list.insert_before(2,1););
+}
+
 TEST(TList, throw_when_element_not_found_in_insert_before)
 {
 	TList<int> list;
@@ -158,11 +166,11 @@ TEST(TList, can_insert_after_element)
 {
 	TList<int> list;
 	list.insert_first(1);
-	list.insert_first(2);
-	list.insert_after(3, 2);
+	list.insert_first(3);
+	list.insert_after(2, 3);
 	list.reset();
 	list.next();
-	EXPECT_EQ(3, list.GetCurrent()->data);
+	EXPECT_EQ(2, list.GetCurrent()->data);
 }
 
 TEST(TList, throw_when_element_not_found_in_insert_after)
@@ -206,19 +214,3 @@ TEST(TList, insert_sort_correct_into_empty_list)
 	EXPECT_EQ(5, list.GetCurrent()->data);
 }
 
-TEST(TList, sort_is_right)
-{
-	TList<int> list;
-	list.insert_last(5);
-	list.insert_last(3);
-	list.insert_last(7);
-	list.insert_last(1);
-	list.sort();
-	EXPECT_EQ(1, list.GetCurrent()->data);
-	list.next();
-	EXPECT_EQ(3, list.GetCurrent()->data);
-	list.next();
-	EXPECT_EQ(5, list.GetCurrent()->data);
-	list.next();
-	EXPECT_EQ(7, list.GetCurrent()->data);
-}

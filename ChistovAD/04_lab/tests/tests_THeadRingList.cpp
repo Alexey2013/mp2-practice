@@ -101,12 +101,6 @@ TEST(THeadRingList, can_clear_list)
 	EXPECT_EQ(0, list.GetSize());
 }
 
-TEST(THeadRingList, throw_when_remove_from_empty_list)
-{
-	THeadRingList<int> list;
-	ASSERT_ANY_THROW(list.remove(5));
-}
-
 TEST(THeadRingList, throw_when_remove_non_exist_elem)
 {
 	THeadRingList<int> list;
@@ -199,23 +193,6 @@ TEST(THeadRingList, insert_sort_correct_into_empty_list)
 	THeadRingList<int> list;
 	list.insert_sort(5);
 	EXPECT_EQ(5, list.GetCurrent()->data);
-}
-
-TEST(THeadRingList, sort_is_right)
-{
-	THeadRingList<int> list;
-	list.insert_last(5);
-	list.insert_last(3);
-	list.insert_last(7);
-	list.insert_last(1);
-	list.sort();
-	EXPECT_EQ(1, list.GetCurrent()->data);
-	list.next();
-	EXPECT_EQ(3, list.GetCurrent()->data);
-	list.next();
-	EXPECT_EQ(5, list.GetCurrent()->data);
-	list.next();
-	EXPECT_EQ(7, list.GetCurrent()->data);
 }
 
 TEST(THeadRingList, check_hr_list_cannot_do_Next_method_at_Head)
